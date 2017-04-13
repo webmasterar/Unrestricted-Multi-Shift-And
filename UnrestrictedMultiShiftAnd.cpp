@@ -155,28 +155,17 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
             this->D[j] = (((this->D[j] << 1) | carry) | this->Sv[j]) & this->Bv[j][charIdx];
 
             //check if any matches found
-            if (this->D[j] & this->Ev[j])
+            checking = this->D[j] & this->Ev[j];
+            if (checking)
             {
                 matchFound = true;
 
-                //find out position of the match
-                checking = this->D[j] & this->Ev[j];
-                k = 0;
-                while (checking != 0)
+                //find out position(s) of the match
+                while (checking)
                 {
-                    if (checking & byteMask)
-                    {
-                        if (checking & one) {
-                            this->matches.insert(pair<int,int>((int)i, this->positions.find(j * BITSINWORD + k)->second));
-                        }
-                        checking = checking >> 1;
-                        k++;
-                    }
-                    else
-                    {
-                        checking = checking >> 8;
-                        k += 8;
-                    }
+                    k = ffs(checking);
+                    this->matches.insert(pair<int,int>((int)i, this->positions.find(j * BITSINWORD + k - 1)->second));
+                    checking = checking >> k;
                 }
             }
 

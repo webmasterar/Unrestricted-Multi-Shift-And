@@ -8,6 +8,7 @@
 #define WORD unsigned long int
 #define WORDSIZE sizeof(WORD)
 #define BITSINWORD (WORDSIZE * 8)
+#define ffs(x) __builtin_ffsl((x))
 
 class UnrestrictedMultiShiftAnd
 {
