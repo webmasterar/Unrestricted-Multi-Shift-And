@@ -1,6 +1,7 @@
 //License MIT 2017 Ahmad Retha
 
 #include <cstdlib>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
@@ -8,7 +9,13 @@
 #define WORD unsigned long int
 #define WORDSIZE sizeof(WORD)
 #define BITSINWORD (WORDSIZE * 8)
-#define ffs(x) __builtin_ffsl((x))
+#if INTPTR_MAX == INT32_MAX
+    #define ffs(x) __builtin_ffs((x))
+#elif INTPTR_MAX == INT64_MAX
+    #define ffs(x) __builtin_ffsl((x))
+#else
+    #error "Unsupported architecture - neither 64 or 32 bit!"
+#endif
 
 class UnrestrictedMultiShiftAnd
 {
