@@ -19,4 +19,4 @@ umsa: clean
 	$(CC) $(CFLAGS) -c UnrestrictedMultiShiftAnd.cpp main.cpp
 
 clean:
-	$(RM) UnrestrictedMultiShiftAnd.o main.o UnrestrictedMultiShiftAnd$(EXT)
+	$(RM) UnrestrictedMultiShiftAnd.o main.o umsa$(EXT)
