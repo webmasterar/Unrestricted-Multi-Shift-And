@@ -50,7 +50,7 @@ void UnrestrictedMultiShiftAnd::reportPatternIds(bool report)
  *
  * @param pattern
  */
-void UnrestrictedMultiShiftAnd::addPattern(const std::string & pattern)
+void UnrestrictedMultiShiftAnd::addPattern(const string & pattern)
 {
     unsigned int i, j, m = pattern.length();
 
@@ -139,7 +139,7 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, unsigned int i)
  * text provided intermittently (on-line algorithm).
  *
  * @param text
- * @param startingSearchState A std::vector<WORD> with L elements
+ * @param startingSearchState A vector<WORD> with L elements
  * @return True if one or more matches found, otherwise False
  */
 bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & startingSearchState)
@@ -153,7 +153,7 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
  * UnrestrictedMultiShiftAnd::search()
  *
  * @param text
- * @param startingSearchState A std::vector<WORD> with L elements
+ * @param startingSearchState A vector<WORD> with L elements
  * @return True if one or matches found, otherwise False
  */
 bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & startingSearchState, unsigned int i)
@@ -177,7 +177,7 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
 
     //init tracking vars
     int charIdx;
-    WORD temp, carry, checking, one = 1ul, byteMask = 255ul;
+    WORD temp, carry, checking;
     WORD carryMask = 1ul << (BITSINWORD - 1);
 
     //loop through the text
