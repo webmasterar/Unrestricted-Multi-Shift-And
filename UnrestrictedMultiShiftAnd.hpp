@@ -66,30 +66,29 @@ protected:
      * the id of the pattern discovered, <index_in_t, pattern_id>
      */
     std::multimap<int,int> matches;
-
     /**
      * @var positions A map of ending positions and the id of the pattern that is found there
      */
     std::map<int,int> positions;
-
     /**
      * @var reportPatterns
      */
     bool reportPatterns;
 
 public:
-    UnrestrictedMultiShiftAnd(const std::string & alphabet);
+    UnrestrictedMultiShiftAnd(const std::string & alphabet, bool reportPatternPositions = true);
     void addPattern(const std::string & pattern);
     bool search(const std::string & text);
-    bool search(const std::string & text, unsigned int i);
+    bool search(const std::string & text, unsigned int pos);
+    bool search(const std::string & text, unsigned int pos, unsigned int len);
     bool search(const std::string & text, std::vector<WORD> & startingSearchState);
-    bool search(const std::string & text, std::vector<WORD> & startingSearchState, unsigned int i);
+    bool search(const std::string & text, std::vector<WORD> & startingSearchState, unsigned int pos);
+    bool search(const std::string & text, std::vector<WORD> & startingSearchState, unsigned int pos, unsigned int len);
     std::multimap<int,int> getMatches() const;
     std::vector<WORD> getLastSearchState() const;
     void clearMatches();
     unsigned int getNumberOfPatterns() const;
     unsigned int getTotalPatternLength() const;
-    void reportPatternIds(bool report = true);
 };
 
 #endif
