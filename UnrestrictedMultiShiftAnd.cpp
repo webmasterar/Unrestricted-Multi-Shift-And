@@ -201,6 +201,7 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
 
     //init tracking vars
     int charIdx;
+    bool zeroed = false;
     bool matchFound = false;
     WORD temp, carry, checking;
     WORD carryMask = 1ul << (BITSINWORD - 1);
@@ -213,9 +214,13 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
 
         if (charIdx == -1)
         {
-            for (j = 0; j < this->L; j++)
+            if (!zeroed)
             {
-                this->D[j] = 0;
+                for (j = 0; j < this->L; j++)
+                {
+                    this->D[j] = 0;
+                }
+                zeroed = true;
             }
         }
         else
@@ -248,6 +253,7 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
 
                 carry = (WORD) ((carryMask & temp) != 0);
             }
+            zeroed = false;
         }
     }
 
