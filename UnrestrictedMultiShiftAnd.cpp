@@ -211,33 +211,43 @@ bool UnrestrictedMultiShiftAnd::search(const string & text, vector<WORD> & start
         carry = 0;
         charIdx = (int) this->Sigma[(int)text[i]] - 1;
 
-        //loop through the words
-        for (j = 0; j < this->L; j++)
+        if (charIdx == -1)
         {
-            temp = this->D[j];
-
-            this->D[j] = (((this->D[j] << 1) | carry) | this->Sv[j]) & this->Bv[j][charIdx];
-
-            //check if any matches found
-            checking = this->D[j] & this->Ev[j];
-            if (checking)
+            for (j = 0; j < this->L; j++)
             {
-                matchFound = true;
-
-                //find out position(s) of the match
-                while (checking)
-                {
-                    k = ffs(checking) - 1;
-                    if (this->reportPatterns) {
-                        this->matches.insert(pair<int,int>((int)i, this->positions.find(j * BITSINWORD + k)->second));
-                    } else {
-                        this->matches.insert(pair<int,int>((int)i, -1));
-                    }
-                    checking = checking ^ (1ul << k);
-                }
+                this->D[j] = 0;
             }
+        }
+        else
+        {
+            //loop through the words
+            for (j = 0; j < this->L; j++)
+            {
+                temp = this->D[j];
 
-            carry = (WORD) ((carryMask & temp) != 0);
+                this->D[j] = (((this->D[j] << 1) | carry) | this->Sv[j]) & this->Bv[j][charIdx];
+
+                //check if any matches found
+                checking = this->D[j] & this->Ev[j];
+                if (checking)
+                {
+                    matchFound = true;
+
+                    //find out position(s) of the match
+                    while (checking)
+                    {
+                        k = ffs(checking) - 1;
+                        if (this->reportPatterns) {
+                            this->matches.insert(pair<int,int>((int)i, this->positions.find(j * BITSINWORD + k)->second));
+                        } else {
+                            this->matches.insert(pair<int,int>((int)i, -1));
+                        }
+                        checking = checking ^ (1ul << k);
+                    }
+                }
+
+                carry = (WORD) ((carryMask & temp) != 0);
+            }
         }
     }
 
